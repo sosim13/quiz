@@ -1,61 +1,72 @@
-import React from 'react';
-const databaseURL = "https://quiz-5e76e-default-rtdb.firebaseio.com/";
+import React, { useEffect, useState } from 'react';
+import firebase from './FireBase';
 
+const Test = () => {
+  const [datas, setDatas] = useState([]);
+  const [user, setUser] = useState('');
+  const [age, setAge] = useState('');
+  const userRef = firebase.database().ref('users');
 
-class Texts extends React.Component  {
+  // 읽기
+  useEffect(() => {
+    userRef.on('value', snapshot => {
+      const users = snapshot.val();
+      const usersData = [];
+      for(let id in users) {
+        usersData.push({ ...users[id], id });
+		console.log("id:"+id);
+      }
+  
+      setDatas(usersData);
+    })
+  }, []);
 
-    render() {
+  // 값이 변경될때
+  const onChange = (e) => {
+    e.target.name === 'user' ? setUser(e.target.value) : setAge(e.target.value);
+  }
 
-		const member = () => this.state = {
-            member: {}
-        };
+  // 등록
+  const onClickAdd = () => {
+    const userData = { user, age };
 
-		const _get = () => {
-			 fetch(`${databaseURL}/member.json`).then(res => {
-				if(res.status != 200) {
-					throw new Error(res.statusText);
-				}
-				return res.json();
-			}).then(member => this.setState({member: member}));
-		};
-		
-		_get();
+    userRef.push(userData);
+    setUser('');
+    setAge('');
+  }
 
-        return (	
-				<div class="container">
-								<table border="1" width="100%">
-									<thead>
-										<th>아이디</th>
-										<th>이름</th>
-										<th>패스워드</th>
-										<th>이메일</th>
-									</thead>
-									<tbody>
-					{Object.keys(this.state.member).map(id => {
-						const member = this.state.member[id];
-						return (					
-									<tr>
-										<td>
-											{member.id}
-										</td>
-										<td>
-											{member.name}
-										</td>
-										<td>
-											{member.password}
-										</td>
-										<td>
-											{member.email}
-										</td>
-									</tr>
-						);
-					})}								
-									</tbody>
-								</table>
-				</div>
+  const onClickRemove = (id) => {
+    userRef.child(id).remove();
+  }
 
-        );
-    }
-}
+  // 수정
+  const onUpdate = (id) => {
+    const [user] = datas.filter(el => el.id === id);
 
-export default Texts;
+    userRef.child(id).update({
+      age: user.age++
+    });
+
+    setDatas(datas.map(el => el.id === id ? {...el, age: el.age++} : el));
+  };
+
+  return (
+    <div>
+      {datas?.map(data => <div key={data.id}>
+        <div>
+          이름: {data.user}
+          <br />
+          나이: {data.age}
+        </div>
+        <button onClick={() => onUpdate(data.id)}>수정</button> <button onClick={() => onClickRemove(data.id)}>삭제</button>
+        <hr />
+      </div>
+      )}
+      <input onChange={onChange} name='user' placeholder='user' value={user}></input>
+      <input onChange={onChange} name='age' placeholder='age' value={age}></input>
+      <button onClick={onClickAdd}>추가하기</button>
+    </div>
+  );
+};
+
+export default Test;

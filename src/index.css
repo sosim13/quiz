@@ -5,12 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background:#faf2f2;
+  padding-bottom:70px;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  margin: 20px;
+  font-size: 2.875rem;
+}
+
+  a:link { color: black; text-decoration: none;}
+  a:visited { color: black; text-decoration: none;}
+  a:hover { color: blue; text-decoration: underline;}
 
 *{
   margin:0; padding:0;
@@ -23,20 +36,23 @@ ul{list-style:none;}
   max-width:100%; 
   margin: 0 auto; 
   position:relative; 
+  /*border-radius: 15px 15px 0px 0px / 15px 15px 0px 0px;*/
 }
 .tabmenu button{
-  display:  inline-block;
+  display:inline-block;
   width:16.66%; 
   float:left;  
   text-align:center; 
-  background :#f9f9f9;
-  line-height:40px;
+  background :#ffffff;
+  line-height:60px;
+  border : 0px solid #f9f9f9;
 }
 button label{
   display:block;
-  width:100%; 
-  height:40px;
-  line-height:40px;
+  width:100%;
+  vertical-align:middle; 
+  height:60px;
+  line-height:20px;
 }
 .tabmenu input{display:none;}
 .tabCon{
@@ -53,4 +69,33 @@ button label{
 }
 .tabmenu input:checked ~ .tabCon{
   display:block;
+}
+
+footer{ position:fixed; 
+  left:0px; 
+  bottom:0px; 
+  height:60px; 
+  width:100%; 
+  color: white; 
+  }
+
+header {
+  height: 30px;
+  padding: 1rem;  
+  color:#abaaaa;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background:#faf2f2;
+}
+
+.topButton{
+  display:inline-block;
+  width:16.66%; 
+  float:left;  
+  text-align:center; 
+  background :#ffffff;
+  line-height:60px;
+  border : 0px solid #f9f9f9;
 }

@@ -1,0 +1,56 @@
+.write_btn{ position:fixed; 
+  left:0px; 
+  top:60px; 
+  height:100px; 
+  width:98%; 
+  background-color: #fff;
+  color: white; 
+  padding: 20px;
+  display:block;
+}
+
+.writeBtn {
+  background-color: #f78287;
+  color: #fff;
+  margin: 10px;
+  padding: 5px 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form > input {
+  font-size: 0.75rem;
+  height: 36px;
+  padding: 0 5px;
+  margin-bottom: 8px;
+}
+
+.form > select {
+  font-size: 0.75rem;
+  height: 36px;
+  padding: 0 5px;
+  margin-bottom: 8px;
+}
+
+.form > input[type='quiz']:focus,
+.form > input[type='answer']:focus {
+  border: 1px solid #f78287;
+}
+
+.writeBtn {
+  cursor: pointer;
+  background-color: #f78287;
+  color: #000;
+}
+
+.delBtn {  
+  position: relative;
+  float: right;
+  top: -50px;
+  right: 15px;
+  border: 0px solid #000;
+  background-color: #faf2f2;
+}

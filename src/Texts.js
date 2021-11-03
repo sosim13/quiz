@@ -1,7 +1,6 @@
 import React from 'react';
 const databaseURL = "https://quiz-5e76e-default-rtdb.firebaseio.com/";
 
-
 class Texts extends React.Component  {
 	constructor() {
         super();

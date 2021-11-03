@@ -1,0 +1,82 @@
+@value makerBlack, #ff4e00, #ddd, #008aff from 'common/colors.css';
+@value tiny from 'common/sizes.css';
+
+.box {
+  width: 350px;
+}
+
+.title {
+  margin-bottom: 40px;
+}
+
+.row {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.row > span {
+  display: block;
+  flex-basis: 100px;
+}
+
+.email {
+  line-height: 36px;
+}
+
+.row > input[type='text'],
+.email {
+  height: 36px;
+  padding: 0 5px;
+}
+
+.row > input[type='text'],
+.message {
+  flex-basis: 300px;
+  border: 1px solid #ddd;
+}
+
+.row > input[type='text']:focus,
+.message:focus {
+  border-color: #ff4e00;
+}
+
+.message {
+  height: 60px;
+  padding: 10px 5px;
+}
+
+.save,
+.logout {
+  font-weight: bold;
+  color: #ff4e00;
+  margin-top: 20px;
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #ff4e00;
+}
+
+.save {
+  color: #008aff;
+  border-color: #008aff;
+}
+
+.row:last-child {
+  justify-content: space-around;
+}
+
+@media (max-width: tiny) {
+  .box {
+    width: 100%;
+  }
+
+  .row > span {
+    flex-basis: 80px;
+  }
+
+  .row > input[type='text'],
+  .message {
+    flex-basis: calc(100% - 80px);
+  }
+}
