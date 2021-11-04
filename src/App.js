@@ -94,7 +94,7 @@ function App() {
         <NavLink  to="/quiz" activeStyle={ activeStyle }>
           <div className='topButton'><AiFillBulb/></div>
         </NavLink >	 
-        <NavLink  to="/LoginForm" activeStyle={ activeStyle }>
+        <NavLink  to="/Users" activeStyle={ activeStyle }>
           <div className='topButton'><AiOutlineAudit/></div>
         </NavLink >
         <NavLink  to="/freeBoard" activeStyle={ activeStyle }>
