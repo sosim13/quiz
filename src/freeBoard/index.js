@@ -4,7 +4,6 @@ import FreeBoardList from "./FreeBoardList";
 import FreeBoardDetail from "./FreeBoardDetail"
 import FreeBoardCRUD from "./FreeBoardCRUD"
 import firebase from './../FireBase';
-import './FreeBoard.css';
 
 function index({ match }) {
  

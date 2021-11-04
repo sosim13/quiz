@@ -4,7 +4,6 @@ import QuizList from "./QuizList";
 import QuizDetail from "./QuizDetail"
 import QuizCRUD from "./QuizCRUD"
 import firebase from './../FireBase';
-import './Quiz.css';
 
 function index({ match }) {
  

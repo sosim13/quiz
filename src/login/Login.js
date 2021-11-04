@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { authService, firebaseInstance  } from './../FireBase';
 import { FcGoogle } from 'react-icons/fc';
-import './Login.css';
 import cranberry_logo from './../cranberry_logo.png';
 
 const Login = () => {

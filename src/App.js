@@ -4,7 +4,7 @@ import { AiFillHeart, AiFillHome, AiOutlineMenu, AiFillSetting, AiFillEdit, AiFi
 import { signIn } from './auth';
 import AuthRoute from './AuthRoute';
 
-import './index.css';
+import './common/index.css';
 
 import Home from "./Home";
 import About from "./About";
@@ -17,6 +17,7 @@ import Quiz from './quiz/index';
 import LoginForm from './LoginForm';
 import LogoutButton from './LogoutButton';
 import Texts from './Texts';
+import T1 from './t1';
 import FreeBoard from './freeBoard/index';
 
 
@@ -45,9 +46,9 @@ function App() {
 			ss_email
         ) : (
           <Link to="/login">LOGIN</Link>
-        )}&nbsp;&nbsp;&nbsp;
+        )}
+		{/*<Link to="/MyPage"><AiFillSetting/></Link>*/}
 		
-		<Link to="/MyPage"><AiFillSetting/></Link>
 		
 		</div>
 
@@ -78,6 +79,7 @@ function App() {
           <Route path="/users" component={Users} />
           <Route path="/quiz" component={Quiz} />
           <Route path="/freeBoard" component={FreeBoard} />
+          <Route path="/t1" component={T1} />
           <Route component={NotFound} />
         </Switch>
       </main>
@@ -92,15 +94,15 @@ function App() {
         <NavLink  to="/quiz" activeStyle={ activeStyle }>
           <div className='topButton'><AiFillBulb/></div>
         </NavLink >	 
-        <NavLink  to="/MyPage" activeStyle={ activeStyle }>
+        <NavLink  to="/LoginForm" activeStyle={ activeStyle }>
           <div className='topButton'><AiOutlineAudit/></div>
         </NavLink >
         <NavLink  to="/freeBoard" activeStyle={ activeStyle }>
           <div className='topButton'><AiFillEdit /></div>
         </NavLink >	 
-	    <NavLink  to="/loginForm" activeStyle={ activeStyle }>			  
-          <div className='topButton'><AiOutlineMenu/></div>
-        </NavLink >
+	    <NavLink  to="/MyPage" activeStyle={ activeStyle }>			  
+          <div className='topButton'><AiFillSetting/></div>
+        </NavLink >			  
         </div>
 	  </footer>
     </Router>

@@ -77,7 +77,7 @@ const QuizList = ({ match }) => {
   
 
   return (
-    <div>
+    <div className='test'>
 		{datas?.map(data => <div key={data.id}>
         <div className='box'>
           <font color='blue'><b><input type='checkbox' name='chk' value='' /> {data.type}</b></font>

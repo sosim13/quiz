@@ -16,15 +16,16 @@ const QuizDetail = ({ match, history }) => {
   useEffect(() => {
     userRef.on('value', snapshot => {
       const users = snapshot.val();
-	  console.log(snapshot.val());
       const usersData = [];
       for(let id in users) {
         usersData.push({ ...users[id], id });
       }
   
       setDatas(usersData);
+
     })
   }, []);
+
 
   return (
    <>

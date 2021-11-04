@@ -91,7 +91,7 @@ h3 {
   position: relative;
   float: right;
   top: 0px;
-  right: 0px;
+  left: 10px;
   border: 0px solid #000;
   background-color: #faf2f2;
 }
@@ -103,4 +103,6 @@ h3 {
 .toast {
   top: 100px;
   left: 30px;
+  height: 70px;
 }
+

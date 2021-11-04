@@ -1,9 +1,7 @@
 @value makerBlack, #ff4e00, #ddd, #008aff from 'common/colors.css';
 @value tiny from 'common/sizes.css';
 
-.box {
-  width: 350px;
-}
+
 
 .title {
   margin-bottom: 40px;
