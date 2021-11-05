@@ -10,10 +10,10 @@ const FreeBoardList = ({ match }) => {
 
   const [datas, setDatas] = useState([]);
   const [type, setType] = useState('');
-  const [quiz, setQuiz] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [email, setEmail] = useState('');
-  const userRef = firebase.database().ref('quiz_list');
+  const userRef = firebase.database().ref('freeBoardList');
 
   useEffect(() => {
     userRef.on('value', snapshot => {
@@ -29,17 +29,17 @@ const FreeBoardList = ({ match }) => {
 
   const onChange = (e) => {
     e.target.name === 'type' ? setType(e.target.value) : setEmail(ss_email);
-    e.target.name === 'quiz' ? setQuiz(e.target.value) : setEmail(ss_email);
-    e.target.name === 'answer' ? setAnswer(e.target.value) : setEmail(ss_email);
+    e.target.name === 'title' ? setTitle(e.target.value) : setEmail(ss_email);
+    e.target.name === 'content' ? setContent(e.target.value) : setEmail(ss_email);
   }
 
   const onClickAdd = () => {
-    const userData = { type, quiz, answer, email };
+    const userData = { type, title, content, email };
 
     userRef.push(userData);
     setType('');
-    setQuiz('');
-    setAnswer('');
+    setTitle('');
+    setContent('');
     setEmail('');
   }
 
@@ -66,21 +66,29 @@ const FreeBoardList = ({ match }) => {
     <div>
 		{datas?.map(data => <div key={data.id}>
         <div className='box'>
-          <font color='blue'>{data.type}</font>
+			{/*<font color='blue'>{data.type}</font><br />*/}
+			
+		  <img src={data.url != null ? data.url.replace("/upload/","/upload/c_thumb,w_100,g_face/") : null} />
+
+				
+          <Link to={`${match.url}/FreeBoardDetial/${data.id}`}>{data.title}</Link>
           <br />
-          <Link to={`${match.url}/FreeBoardDetial/${data.id}`}>{data.quiz}</Link>
-          <br />
-          <AiFillCopy/> {data.answer}
+          <Link to={`${match.url}/FreeBoardDetial/${data.id}`}>{data.content}</Link>
         </div>	
         <hr />		
-		{data.email == ss_email ? (
+		{/*data.email == ss_email ? (
 		  <button className='delBtn' onClick={() => onClickRemove(data.id)}><AiOutlineClose/></button>
         ) : (
 		  null
-        )}		
+        )*/}		
       </div>
       )}
-	<Link to={`${match.url}/FreeBoardCRUD`}>
+	  {datas.length == 0 ? (
+		<div className='box'>등록된 게시물이 없습니다.</div>
+	  ) : (
+		null
+	  )}
+	<Link to={`${match.url}/FreeBoardWrite`}>
 	  <button className='writeRedBtn'>
         글쓰기
       </button>

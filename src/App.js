@@ -18,6 +18,7 @@ import LoginForm from './LoginForm';
 import LogoutButton from './LogoutButton';
 import Texts from './Texts';
 import T1 from './t1';
+import T2 from './t2';
 import FreeBoard from './freeBoard/index';
 
 
@@ -80,6 +81,7 @@ function App() {
           <Route path="/quiz" component={Quiz} />
           <Route path="/freeBoard" component={FreeBoard} />
           <Route path="/t1" component={T1} />
+          <Route path="/t2" component={T2} />
           <Route component={NotFound} />
         </Switch>
       </main>

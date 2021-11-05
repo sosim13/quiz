@@ -1,0 +1,14 @@
+import React from "react";
+import {Image} from 'cloudinary-react';
+
+function t2() {
+ 
+
+  return (
+    <>
+	  <Image cloudName="demo" publicId="sample" width="300" crop="scale"/>
+    </>
+  );
+}
+
+export default t2;
