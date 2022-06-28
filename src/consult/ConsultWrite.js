@@ -3,8 +3,11 @@ import firebase from './../FireBase';
 import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
+// push request
+import request from 'request';
+import axios from "axios";
 
-const FreeBoardCRUD = ({ match, history }) => {
+const ConsultCRUD = ({ match, history }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
@@ -13,18 +16,46 @@ const FreeBoardCRUD = ({ match, history }) => {
   const nowTime = moment().format('YYYYMMDDHHmmss');
 //  console.log(nowTime);
 
+  // axios 푸시
+  const axios = require('axios')
+  function asFcmRequest(pushId, subject,msg,link,chkMessage) {
+	  
+	const options = {
+	  'to': pushId,
+	  'data': {
+		'title': subject,
+		'body': msg,
+		'tag': link,
+	  },
+	}
+
+	const request = {
+	url: 'https://fcm.googleapis.com/fcm/send',
+	  headers: {
+		Authorization: 'key=AAAAMjvVL9Y:APA91bFmhTC4IJ32zy4XyPASEqjeYZXxM2ZsgFBtTWr7P7YgyKOshNsDDQgZOhSLpAwYfyErvEW9skRiiWAHGW1I5YWJsyWAOw1oNbZfi1Gt6xT8pn61Z-oZpZR3qJiQiEZhNkTmm8IG',
+		'Content-Type': 'application/json'
+	  },
+	  method: 'post',
+	  data: options
+	}
+	return axios(request);	
+  }
+  // axios 푸시 끝
+
   const [datas, setDatas] = useState([]);
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
   const [nickName, setNickName] = useState('');
   const [content, setContent] = useState('');
-  const [email, setEmail] = useState(ss_account);
+  const [email, setEmail] = useState('');
   const [wtime, setWtime] = useState('');
   const [utime, setUtime] = useState('');
   const [url, setUrl] = useState("");
   const [readNo, setReadNo] = useState(0);
-  const userRef = firebase.database().ref('freeBoardList');
+  const userRef = firebase.database().ref('consultList');
   const loginRef = firebase.database().ref('member_list');
+  // push 알림 리스트 가져오기
+  const alarmRef = firebase.database().ref('member_alarm');
 
   useEffect(() => {
     loginRef.on('value', snapshot => {
@@ -65,10 +96,20 @@ const FreeBoardCRUD = ({ match, history }) => {
     const userData = { type, title, nickName, content, email, wtime, utime, url, readNo };
 
     userRef.push(userData);
+	alarmRef.orderByChild('email').equalTo('50english@naver.com').once('value', snapshot => {
+	  const alarms = snapshot.val();
+	  for(let id in alarms) {
+			asFcmRequest(alarms[id].reg_id, '['+nickName+' 1:1문의] ('+type+') '+title,content,'https://bnbd.co.kr/consult/1', 'consult by system')
+	  }
+  
+	})
 
 
     ToastsStore.success("등록했습니다.");
-	window.location.replace("/freeBoard/1");
+	setTimeout(function(){
+		window.location.replace("/consult/1");
+	}, 1000);
+//	window.location.replace("/consult/1");
 //    setType('');
 //    setTitle('');
 //    setContent('');
@@ -114,6 +155,18 @@ const FreeBoardCRUD = ({ match, history }) => {
 	    </select>*/}
 		
         <div className='row'>
+		  <span>문의종류</span>
+		  <select name='type' onChange={onChange}>
+			  <option value=''>선택</option>
+			  <option value='사용문의'>사용문의</option>
+			  <option value='오류문의'>오류문의</option>
+			  <option value='포인트문의'>포인트문의</option>
+			  <option value='건의사항'>건의사항</option>
+			  <option value='의견사항'>의견사항</option>
+			  <option value='기타'>기타</option>
+			</select>
+		</div>		
+        <div className='row'>
 		  <span>제목</span>
 		  <input
 			name={'title'}
@@ -148,7 +201,7 @@ const FreeBoardCRUD = ({ match, history }) => {
 		</div>
 		<div className="buttons">
 			<button className="write" onClick={onClickAdd}>글쓰기</button>
-			<button className="cancel"onClick={() => window.location.replace("/freeBoard/"+match.params.page)}>취소</button>
+			<button className="cancel"onClick={() => window.location.replace("/consult/"+match.params.page)}>취소</button>
 		</div>
       </div>
     <ToastsContainer className='toast' store={ToastsStore} lightBackground/>
@@ -156,4 +209,4 @@ const FreeBoardCRUD = ({ match, history }) => {
   );
 };
 
-export default FreeBoardCRUD;
+export default ConsultCRUD;

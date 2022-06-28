@@ -5,7 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
-const FreeBoardDetail = ({ match, history }) => {
+const ConsultDetail = ({ match, history }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
@@ -23,8 +23,8 @@ const FreeBoardDetail = ({ match, history }) => {
   const [email, setEmail] = useState(ss_account);
   const [nickName, setNickName] = useState('');
   const [readNo, setReadNo] = useState(0);
-  const userRef = firebase.database().ref('freeBoardList');
-  const answerRef = firebase.database().ref('freeBoardAnswerList');
+  const userRef = firebase.database().ref('consultList');
+  const answerRef = firebase.database().ref('consultAnswerList');
   const [myData, setMyData] = useState(0);
   const [answer, setAnswer] = useState('');
   const loginRef = firebase.database().ref('member_list');
@@ -80,7 +80,7 @@ const FreeBoardDetail = ({ match, history }) => {
 		
 	  ToastsStore.success("삭제되었습니다.");
 	  userRef.child(id).remove();	  
-      window.location.replace("/freeBoard/"+match.params.page);
+      window.location.replace("/consult/"+match.params.page);
 	}    
   }
 
@@ -106,7 +106,7 @@ const FreeBoardDetail = ({ match, history }) => {
 
 
     ToastsStore.success("댓글을 등록했습니다.");
-//	window.location.replace("/freeBoard");
+//	window.location.replace("/consult");
     setAnswer('');
 //    setTitle('');
 //    setContent('');
@@ -119,7 +119,7 @@ const FreeBoardDetail = ({ match, history }) => {
 		
 	  ToastsStore.success("댓글이 삭제되었습니다.");
 	  answerRef.child(id).remove();	  
-//      window.location.replace("/freeBoard");
+//      window.location.replace("/consult");
 	}    
   }
 
@@ -131,21 +131,21 @@ const FreeBoardDetail = ({ match, history }) => {
         
 			
 	    <div>
-			<span className='read_title'>{data.title} [{data.readNo}]</span>
+			<span className='board_title'>{data.title} [{data.readNo}]</span>
 			<span className='writer'>{data.nickName}</span>
 <br/>
 <br/>
 			<span className='date'>{data.utime.substring(0,4)+'-'+data.utime.substring(4,6)+'-'+data.utime.substring(6,8)+' '+data.utime.substring(8,10)+':'+data.utime.substring(10,12)}</span>
-			<p className='read_content'>
+			<p className='content'>
 		<img src={data.url} width="100%"/>
 			<pre>{data.content}</pre>
         </p>
 			<br/>
         </div>
 	  <hr/>
-      <button className='grayBtn' onClick={() => window.location.replace("/freeBoard/"+match.params.page)}>목록</button>
+      <button className='grayBtn' onClick={() => window.location.replace("/consult/"+match.params.page)}>목록</button>
 	{myData == 1 && <>
-	  <Link to={`/freeBoard/FreeBoardEdit/${pid}/${match.params.page}`}>
+	  <Link to={`/consult/ConsultEdit/${pid}/${match.params.page}`}>
 		<button className='grayBtn'> 수정</button>
 	  </Link>
 	  <button className='grayBtn' onClick={() => onClickRemove(pid)}>삭제</button>
@@ -164,7 +164,7 @@ const FreeBoardDetail = ({ match, history }) => {
 						<span className="comment_name">{answer.nickName}</span>
 						<span className="comment_date">{answer.wtime == wtime ? answer.wtime.substring(8,10)+':'+answer.wtime.substring(10,12) : answer.wtime.substring(4,6)+'-'+answer.wtime.substring(6,8)}</span>
 					</div>
-					<p className="comment_content"><pre>{answer.answer}</pre></p>
+					<p className="comment_content">{answer.answer}</p>
 					<div className="comment_btnBox">
 				{/*<button className="edit">수정</button>*/}
 				{answer.email == ss_account ? (
@@ -193,4 +193,4 @@ const FreeBoardDetail = ({ match, history }) => {
   );
 };
 
-export default FreeBoardDetail;
+export default ConsultDetail;

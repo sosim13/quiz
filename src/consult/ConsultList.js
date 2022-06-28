@@ -5,10 +5,8 @@ import Pagination from '../common/Pagination';
 import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import { IconContext } from "react-icons";
-import { AiOutlineClose } from "react-icons/ai";
-import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
-const FreeBoardList = ({ match }) => {
+const ConsultList = ({ match }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
@@ -23,8 +21,8 @@ const FreeBoardList = ({ match }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [email, setEmail] = useState('');
-  const userRef = firebase.database().ref('freeBoardList');
-  const answerRef = firebase.database().ref('freeBoardAnswerList');
+  const userRef = firebase.database().ref('consultList');
+  const answerRef = firebase.database().ref('consultAnswerList');
 
   const [answerCnt, setAnswerCnt] = useState(0);
 
@@ -35,10 +33,10 @@ const FreeBoardList = ({ match }) => {
   const [totalCnt, setTotalCnt] = useState(0);				// 총건수
 
   let count = 0;
-
+  
   useEffect(() => {
-
-    userRef.orderByChild('wtime').on('value', snapshot => {
+	  {ss_account != 'sosim13p@gmail.com' ?
+    userRef.orderByChild('email').equalTo(ss_account).on('value', snapshot => {
 //    userRef.orderByChild('email').equalTo('test@m.mm').once('value', snapshot => {
 //    userRef.orderByValue().startAt(3).limitToLast(4).on('value', snapshot => {
       const users = snapshot.val();
@@ -59,6 +57,29 @@ const FreeBoardList = ({ match }) => {
 //      setFullDatas(currentPosts(usersData));
       setDatas(usersData);
     })
+		:
+		 userRef.orderByChild('wtime').on('value', snapshot => {
+//    userRef.orderByChild('email').equalTo('test@m.mm').once('value', snapshot => {
+//    userRef.orderByValue().startAt(3).limitToLast(4).on('value', snapshot => {
+      const users = snapshot.val();
+      const usersData = [];
+
+      for(let id in users) {
+	    count++;
+        usersData.push({ ...users[id], id });
+      }
+
+	  setTotalCnt(count);
+	  // orderBy 정렬순서
+	  usersData.sort(function(a, b) {
+		  var aorder = parseInt(a.wtime.toString());
+		  var border = parseInt(b.wtime.toString());
+	    return border - aorder;
+	  });
+//      setFullDatas(currentPosts(usersData));
+      setDatas(usersData);
+    })
+	  }
   }, []);
 
 	
@@ -74,11 +95,10 @@ const FreeBoardList = ({ match }) => {
     setEmail('');
   }
 
-   const onClickRemove = (id) => {
+  const onClickRemove = (id) => {
 
 	if (window.confirm("정말 삭제하시겠습니까?")) {
-	  userRef.child(id).remove();   
-	  ToastsStore.success("삭제되었습니다.");
+	  userRef.child(id).remove();
 	}
     
   }
@@ -94,7 +114,7 @@ const FreeBoardList = ({ match }) => {
 	}
 	setTotalCnt(totalCnt);
 
-    window.location.replace("/freeBoard/FreeBoardDetial/"+id+"/"+currentPage);
+    window.location.replace("/consult/ConsultDetial/"+id+"/"+currentPage);
   };
 
 
@@ -131,9 +151,9 @@ const FreeBoardList = ({ match }) => {
 			
 		  <div className="board_list"><img src={data.url != null ? data.url.replace("/upload/","/upload/c_thumb,w_100,h_57,g_face/") : null} /></div>
 	        <div className="board_list2">				
-				<span className={data.url != '' ? "board_title" : "board_title_noimg"} onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.title}</span>		  
+				<span className="board_title" onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.title}</span>		  
 				<br />
-				<span className={data.url != '' ? "content" : "content_noimg"} onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.content}</span> 
+				<span className="content" onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.content.substring(0, 20)}{data.content.length >= 20 && '...'}</span> 
 				{/*
 				  <span className="rcontent">
 					  <IconContext.Provider value={{ className: 'free_react-icons' }}><AiOutlineMessage size="18"/></IconContext.Provider> {answerCount(data.id)}
@@ -143,11 +163,6 @@ const FreeBoardList = ({ match }) => {
 		    </div>
 		    <span className="eye_read_no">{data.nickName} </span><br/>
 		    <span className="eye_read_no">{data.utime.substring(4,8) == nowdate ? data.utime.substring(8,10)+':'+data.utime.substring(10,12) : data.utime.substring(4,6)+'-'+data.utime.substring(6,8)} [ {data.readNo == null ? '0' : data.readNo} ] </span>
-				{ss_account == 'sosim13p@gmail.com' ? (
-			  <button className='adminFreeBoardDelBtn' onClick={() => onClickRemove(data.id)}><AiOutlineClose/></button>
-			) : (
-			  null
-			)}
           </div>	
         <hr />		
 		{/*data.email == ss_account ? (
@@ -166,18 +181,17 @@ const FreeBoardList = ({ match }) => {
 
 	<Pagination postsPerPage={postsPerPage} totalPosts={totalCnt} currentPage={currentPage} paginate={setCurrentPage}></Pagination>
 	{/*총건수 : {totalCnt}/{datas.length}, 현재페이지 : {currentPage} /  {indexOfFirst }, {indexOfLast} <br/>*/}
-	<Link to={`/freeBoard/FreeBoardWrite/${currentPage}`}>
+	<Link to={`/consult/ConsultWrite/${currentPage}`}>
 	  {ss_account != null ? (
 	  <button className='writeRedBtn'>
-        글쓰기
+        문의하기
       </button>
 		) : (
 		  <div></div>
 	)}
 	</Link>
-	<ToastsContainer className='toast' store={ToastsStore} lightBackground/>
     </div>
   );	
 };
 
-export default FreeBoardList;
+export default ConsultList;

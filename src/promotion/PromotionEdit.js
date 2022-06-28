@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
-const FreeBoardCRUD = ({ match, history }) => {
+const PromotionCRUD = ({ match, history }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
@@ -22,7 +22,7 @@ const FreeBoardCRUD = ({ match, history }) => {
   const [utime, setUtime] = useState('');
   const [firebaseId, setFirebaseId] = useState('');
   const [url, setUrl] = useState("");
-  const userRef = firebase.database().ref('freeBoardList');
+  const userRef = firebase.database().ref('promotionList');
  
   useEffect(() => {
     userRef.orderByKey().equalTo(match.params.id2).once('value', snapshot => {
@@ -51,7 +51,7 @@ const FreeBoardCRUD = ({ match, history }) => {
     const userData = { type, title, content, email, utime };
 
     userRef.push(userData);
-	window.location.replace("/freeBoard");
+	window.location.replace("/promotion");
 //    setType('');
 //    setTitle('');
 //    setContent('');
@@ -75,7 +75,7 @@ const FreeBoardCRUD = ({ match, history }) => {
 	    
     ToastsStore.success("수정했습니다.");
 	setTimeout(function(){
-		window.location.replace("/freeBoard/"+match.params.page2);
+		window.location.replace("/promotion/"+match.params.page2);
 	}, 1000);
   };
 
@@ -116,12 +116,12 @@ const FreeBoardCRUD = ({ match, history }) => {
 			  />
 			</div>
 			<div className='row'>
-			  <span>내용</span>
+			  <span>소개</span>
 			  <textarea
 				name={'content'}
 				className='message'
 				placeholder="내용"
-				maxLength="2000"
+				maxLength="20000"
 				value={content}
 				onChange={onChange}
 			  ></textarea>
@@ -154,4 +154,4 @@ const FreeBoardCRUD = ({ match, history }) => {
   );
 };
 
-export default FreeBoardCRUD;
+export default PromotionCRUD;

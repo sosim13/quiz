@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
-const FreeBoardCRUD = ({ match, history }) => {
+const MessageCRUD = ({ match, history }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
@@ -18,12 +18,12 @@ const FreeBoardCRUD = ({ match, history }) => {
   const [title, setTitle] = useState('');
   const [nickName, setNickName] = useState('');
   const [content, setContent] = useState('');
-  const [email, setEmail] = useState(ss_account);
+  const [email, setEmail] = useState('');
   const [wtime, setWtime] = useState('');
   const [utime, setUtime] = useState('');
   const [url, setUrl] = useState("");
   const [readNo, setReadNo] = useState(0);
-  const userRef = firebase.database().ref('freeBoardList');
+  const userRef = firebase.database().ref('messageList');
   const loginRef = firebase.database().ref('member_list');
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const FreeBoardCRUD = ({ match, history }) => {
 
 
     ToastsStore.success("등록했습니다.");
-	window.location.replace("/freeBoard/1");
+	window.location.replace("/message/1");
 //    setType('');
 //    setTitle('');
 //    setContent('');
@@ -148,7 +148,7 @@ const FreeBoardCRUD = ({ match, history }) => {
 		</div>
 		<div className="buttons">
 			<button className="write" onClick={onClickAdd}>글쓰기</button>
-			<button className="cancel"onClick={() => window.location.replace("/freeBoard/"+match.params.page)}>취소</button>
+			<button className="cancel"onClick={() => window.location.replace("/message/"+match.params.page)}>취소</button>
 		</div>
       </div>
     <ToastsContainer className='toast' store={ToastsStore} lightBackground/>
@@ -156,4 +156,4 @@ const FreeBoardCRUD = ({ match, history }) => {
   );
 };
 
-export default FreeBoardCRUD;
+export default MessageCRUD;

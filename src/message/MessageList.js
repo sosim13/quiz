@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import firebase from './../FireBase';
 import { Link } from "react-router-dom";
+import { AiOutlineClose, AiFillCopy, AiFillEye, AiOutlineMessage } from "react-icons/ai";
 import Pagination from '../common/Pagination';
 import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 import { IconContext } from "react-icons";
-import { AiOutlineClose } from "react-icons/ai";
-import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
-const FreeBoardList = ({ match }) => {
+const MessageList = ({ match }) => {
   // 로그인체크
   const ss_email = window.sessionStorage.getItem('ss_email');
   const ss_account = window.localStorage.getItem('ss_account');
+
 
   const nowdate = moment().format('MMDD');
 
@@ -23,8 +23,8 @@ const FreeBoardList = ({ match }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [email, setEmail] = useState('');
-  const userRef = firebase.database().ref('freeBoardList');
-  const answerRef = firebase.database().ref('freeBoardAnswerList');
+  const userRef = firebase.database().ref('message');
+  const answerRef = firebase.database().ref('noticeAnswerList');
 
   const [answerCnt, setAnswerCnt] = useState(0);
 
@@ -74,27 +74,25 @@ const FreeBoardList = ({ match }) => {
     setEmail('');
   }
 
-   const onClickRemove = (id) => {
+  const onClickRemove = (id) => {
 
 	if (window.confirm("정말 삭제하시겠습니까?")) {
-	  userRef.child(id).remove();   
-	  ToastsStore.success("삭제되었습니다.");
+	  userRef.child(id).remove();
 	}
     
   }
   
-  const onUpdate = (id, dataEmail, readNo) => {
+  const onUpdate = (id, readNo) => {
 
 //    const [data] = currentPosts(datas).filter(el => el.id === id);
-	if (dataEmail != ss_account)
-	{
-		userRef.child(id).update({
-		  readNo: readNo+1
-		});
-	}
+
+    userRef.child(id).update({
+      readNo: readNo+1
+    });
+
 	setTotalCnt(totalCnt);
 
-    window.location.replace("/freeBoard/FreeBoardDetial/"+id+"/"+currentPage);
+    window.location.replace("/message/MessageDetial/"+id+"/"+currentPage);
   };
 
 
@@ -131,9 +129,9 @@ const FreeBoardList = ({ match }) => {
 			
 		  <div className="board_list"><img src={data.url != null ? data.url.replace("/upload/","/upload/c_thumb,w_100,h_57,g_face/") : null} /></div>
 	        <div className="board_list2">				
-				<span className={data.url != '' ? "board_title" : "board_title_noimg"} onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.title}</span>		  
+				<span className={data.url != '' ? "board_title" : "board_title_noimg"} onClick={() => onUpdate(data.id, data.readNo)}>{data.title}</span>		  
 				<br />
-				<span className={data.url != '' ? "content" : "content_noimg"} onClick={() => onUpdate(data.id, data.email, data.readNo)}>{data.content}</span> 
+				<span className={data.url != '' ? "content" : "content_noimg"} onClick={() => onUpdate(data.id, data.readNo)}>{data.content.substring(0, 20)}{data.content.length >= 20 && '...'}</span> 
 				{/*
 				  <span className="rcontent">
 					  <IconContext.Provider value={{ className: 'free_react-icons' }}><AiOutlineMessage size="18"/></IconContext.Provider> {answerCount(data.id)}
@@ -143,11 +141,6 @@ const FreeBoardList = ({ match }) => {
 		    </div>
 		    <span className="eye_read_no">{data.nickName} </span><br/>
 		    <span className="eye_read_no">{data.utime.substring(4,8) == nowdate ? data.utime.substring(8,10)+':'+data.utime.substring(10,12) : data.utime.substring(4,6)+'-'+data.utime.substring(6,8)} [ {data.readNo == null ? '0' : data.readNo} ] </span>
-				{ss_account == 'sosim13p@gmail.com' ? (
-			  <button className='adminFreeBoardDelBtn' onClick={() => onClickRemove(data.id)}><AiOutlineClose/></button>
-			) : (
-			  null
-			)}
           </div>	
         <hr />		
 		{/*data.email == ss_account ? (
@@ -158,7 +151,7 @@ const FreeBoardList = ({ match }) => {
       </div>
       )}
 	  {currentPosts(datas).length == 0 ? (
-		<div className='box'>등록된 게시물이 없습니다.</div>
+		<div className='box'>등록된 글이 없습니다.</div>
 	  ) : (
 		null
 	  )}
@@ -166,8 +159,8 @@ const FreeBoardList = ({ match }) => {
 
 	<Pagination postsPerPage={postsPerPage} totalPosts={totalCnt} currentPage={currentPage} paginate={setCurrentPage}></Pagination>
 	{/*총건수 : {totalCnt}/{datas.length}, 현재페이지 : {currentPage} /  {indexOfFirst }, {indexOfLast} <br/>*/}
-	<Link to={`/freeBoard/FreeBoardWrite/${currentPage}`}>
-	  {ss_account != null ? (
+	<Link to={`/message/MessageWrite/${currentPage}`}>
+	  {ss_account == 'sosim13p@gmail.com' || ss_account == '50english@naver.com' ? (
 	  <button className='writeRedBtn'>
         글쓰기
       </button>
@@ -175,9 +168,8 @@ const FreeBoardList = ({ match }) => {
 		  <div></div>
 	)}
 	</Link>
-	<ToastsContainer className='toast' store={ToastsStore} lightBackground/>
     </div>
   );	
 };
 
-export default FreeBoardList;
+export default MessageList;
