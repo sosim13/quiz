@@ -20,8 +20,9 @@
 	yarn add react-script-tag
 
 5. styled-components 설치
-	npm i styled-components
-	
+	npm install styled-components
+	또는
+	yarn add styled-components
 
 
 

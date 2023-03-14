@@ -210,6 +210,8 @@ setTimeout(() => {
 		exeDeepLink("com.shcard.smartpay");
 	}else if(type == "타임스프레드"){
 		exeDeepLink("com.timespread.Timetable2");
+	}else if(type == "캐시닥"){
+		exeDeepLink("com.cashdoc.cashdoc");
 	}else if(type == "허니스크린"){
 		exeDeepLink("com.buzzvil.adhours");
 	}else if(type == "토스"){
@@ -230,6 +232,14 @@ setTimeout(() => {
 		exeDeepLink("com.yes24.commerce");
 	}else if(type == "정관장 케어나우"){
 		exeDeepLink("kr.co.kgc.carenow");
+	}else if(type == "어댑터"){
+		exeDeepLink("com.sinest.todaycoin");
+	}else if(type == "패널나우"){
+		exeDeepLink("com.d8aspring.panelnow");
+	}else if(type == "아이퀴즈"){
+		exeDeepLink("com.mrtest.iquiz");
+	}else if(type == "아이퀴즈 한자"){
+		exeDeepLink("com.mrtest.iquiz_hanja");
 	}else{
 		exeDeepLink("com.bnbd.cranberry");
 	}

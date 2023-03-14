@@ -239,6 +239,10 @@ const inputRef = React.useRef(null);
 			type_name = 'adapter';
 		}else if(type == '패널나우'){
 			type_name = 'pannelnow';
+		}else if(type == '아이퀴즈'){
+			type_name = 'iquiz';
+		}else if(type == '아이퀴즈 한자'){
+			type_name = 'iquiz2';
 		}else if(type == '기타'){
 			type_name = 'etc';
 		}

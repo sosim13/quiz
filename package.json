@@ -12,7 +12,9 @@
     "axios": "^0.27.2",
     "bootstrap": "^4.6.0",
     "cloudinary-react": "^1.7.0",
+    "dom-to-image": "^2.6.0",
     "dotenv": "^9.0.0",
+    "file-saver": "^2.0.5",
     "firebase": "^9.2.0",
     "firebaseui": "^6.0.0",
     "moment": "^2.29.1",
@@ -25,10 +27,10 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-script-tag": "^1.1.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "react-toasts": "^3.0.6",
     "styled-components": "^5.3.5",
-    "update": "^0.7.4",
+    "update": "^0.4.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

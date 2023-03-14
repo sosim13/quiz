@@ -1057,3 +1057,20 @@ table.type04 td {
 .tdRed{
     color: red;
 }
+
+.test_box {
+	position: relative;
+	top: 100;
+	left: 100;
+	width: 100%;
+	text-align: center;
+	border: 0px solid white;
+	background-color: white;
+	z-index:1000;
+	overflow: auto;
+}
+
+.test_box2 {
+	padding : 30px;
+	background-color: #dcdcdc;
+}

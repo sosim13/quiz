@@ -27,6 +27,8 @@ import T5 from './t5';
 import T6 from './t6';
 import T7 from './t7';
 import T8 from './t8';
+import T9 from './t9';
+import T10 from './t10';
 import Push from './Push';
 import Alarm from './login/Alarm';
 import Promotion from './promotion/index';
@@ -115,6 +117,8 @@ function App() {
           <Route path="/t6" component={T6} />
           <Route path="/t7" component={T7} />
           <Route path="/t8" component={T8} />
+          <Route path="/t9" component={T9} />
+          <Route path="/t10" component={T10} />
           <Route path={`/push`} component={Push} />
           <Route path="/message" component={Message} />
           <Route path="/accountbook" component={AccountBook} />
